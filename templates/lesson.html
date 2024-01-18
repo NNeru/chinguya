@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chingu-ya! Lesson</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
 </head>
 <body>
     <header>
         <h1>Chingu-ya! Lesson</h1>
-        <!-- Navigation can be similar to the index.html -->
         <nav>
             <ul>
                 <li><a href="/">Home</a></li>
@@ -22,17 +21,39 @@
     </header>
 
     <main>
-        <article id="lesson-content">
-            <h2>Lesson Title</h2>
-            <p>Lesson details, content, and interactive elements go here.</p>
-            <!-- Add lesson content -->
-        </article>
+        <div id="level-selection">
+            <button onclick="selectLevel('beginner')">Beginner</button>
+            <button onclick="selectLevel('intermediate')">Intermediate</button>
+            <button onclick="selectLevel('advanced')">Advanced</button>
+        </div>
 
-        <!-- Add interactive elements like quizzes or practice prompts -->
+        <div id="chatbox" style="display:none;">
+            <div id="chat-messages"></div>
+            <input type="text" id="user-input" placeholder="Type your message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
     </main>
 
     <footer>
-        <!-- Similar footer as in index.html -->
+        <p>© 2024 Chingu-ya! - Your Korean Language Companion</p>
     </footer>
+
+    <script>
+        function selectLevel(level) {
+            document.getElementById('chatbox').style.display = 'block';
+            let initialMessage = `Starting lesson for ${level} level.`;
+            document.getElementById('chat-messages').innerText = initialMessage;
+        }
+
+        function sendMessage() {
+            let userInput = document.getElementById('user-input').value;
+            if (userInput) {
+                let chatMessages = document.getElementById('chat-messages');
+                chatMessages.innerHTML += `<div>User: ${userInput}</div>`;
+                document.getElementById('user-input').value = '';
+                // AJAX call to Flask backend will be implemented here
+            }
+        }
+    </script>
 </body>
 </html>
